@@ -73,6 +73,7 @@ namespace Motel.API.Models
                 if (entityEntry.State == EntityState.Added)
                 {
                     ((ISoftDeletes)entityEntry.Entity).CreatedAt = DateTime.Now;
+                    ((ISoftDeletes)entityEntry.Entity).DeletedAt = null;
                 }
 
                 if (entityEntry.State == EntityState.Deleted)

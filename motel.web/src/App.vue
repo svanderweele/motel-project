@@ -1,19 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HomePage v-bind:test="test" />
+    <div>
+      <b-jumbotron header="The Hillside Lodge" lead="A lodge overlooking a beautiful valley.">
+        <b-button variant="primary" href="#">Book a room now!</b-button>
+      </b-jumbotron>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HomePage from "./pages/HomePage";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    HomePage
+  },
+  data() {
+    return {
+      test: "my data"
+    };
   }
-}
+};
 </script>
 
 <style>

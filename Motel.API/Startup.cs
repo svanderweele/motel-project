@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Motel.API.Classes;
 using Motel.API.Models;
+using Motel.API.Services;
 
 namespace Motel.API
 {
@@ -27,6 +28,8 @@ namespace Motel.API
             //     options.UseLazyLoadingProxies();
             //     options.UseInMemoryDatabase("Dev");
             // });
+
+            services.AddScoped<IReservationService, ReservationService>();
 
             services.AddCors(options =>
             {

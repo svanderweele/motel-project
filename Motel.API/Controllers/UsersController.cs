@@ -61,8 +61,6 @@ namespace Motel.API.Controllers
             MyPasswordHasher.CreatePasswordHash(user.PasswordPlain, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            // user.Ref = Guid.NewGuid();
-            // _context.Entry(user).Property(e => e.Ref).IsModified = true;
             _context.Entry(user).Property(e => e.PasswordHash).IsModified = true;
             _context.Entry(user).Property(e => e.PasswordSalt).IsModified = true;
             _context.Users.Add(user);

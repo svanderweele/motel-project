@@ -21,6 +21,8 @@ namespace Motel.API.Classes
 
         public string SortBy { get; set; }
         public string SortOrder { get; set; }
+        public bool ShowDeleted { get; set; } = false;
+
 
     }
 }

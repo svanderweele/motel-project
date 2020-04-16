@@ -6,6 +6,6 @@ namespace Motel.API.Classes
     {
         DateTime CreatedAt { get; set; }
         DateTime UpdatedAt { get; set; }
-        DateTime DeletedAt { get; set; }
+        DateTime? DeletedAt { get; set; }
     }
 }
