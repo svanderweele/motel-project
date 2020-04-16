@@ -77,7 +77,7 @@ export default {
     msg: String
   },
   created() {
-    fetch("https://localhost:5001/api/room/1")
+    fetch("https://localhost:5001/api/rooms/1")
       .then(res => res.json())
       .then(data => console.log(data));
   }

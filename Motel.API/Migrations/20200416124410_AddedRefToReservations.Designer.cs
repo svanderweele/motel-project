@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Motel.API.Models;
 
 namespace Motel.API.Migrations
 {
     [DbContext(typeof(MotelContext))]
-    partial class MotelContextModelSnapshot : ModelSnapshot
+    [Migration("20200416124410_AddedRefToReservations")]
+    partial class AddedRefToReservations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +57,7 @@ namespace Motel.API.Migrations
                             DepartureDate = new DateTime(2020, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NumberOfAdults = 2,
                             NumberOfChildren = 1,
-                            Ref = new Guid("7de2e2f4-a392-4897-81e9-9b2c36d91b5c"),
+                            Ref = new Guid("00000000-0000-0000-0000-000000000000"),
                             UserId = 1
                         },
                         new
@@ -65,7 +67,7 @@ namespace Motel.API.Migrations
                             DepartureDate = new DateTime(2020, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NumberOfAdults = 1,
                             NumberOfChildren = 3,
-                            Ref = new Guid("2fcbff7b-12dc-4224-81ab-12d0faa0316c"),
+                            Ref = new Guid("00000000-0000-0000-0000-000000000000"),
                             UserId = 1
                         },
                         new
@@ -75,7 +77,7 @@ namespace Motel.API.Migrations
                             DepartureDate = new DateTime(2020, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NumberOfAdults = 1,
                             NumberOfChildren = 2,
-                            Ref = new Guid("480c5b4b-c894-4a9e-b040-668f591dc308"),
+                            Ref = new Guid("00000000-0000-0000-0000-000000000000"),
                             UserId = 1
                         });
                 });
@@ -140,12 +142,6 @@ namespace Motel.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DeletedAt")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Email")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -161,9 +157,6 @@ namespace Motel.API.Migrations
                     b.Property<Guid>("Ref")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -172,14 +165,11 @@ namespace Motel.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "simon@example.com",
                             Name = "Simon van der Weele",
-                            PasswordHash = new byte[] { 92, 12, 31, 101, 211, 95, 125, 32, 151, 166, 7, 85, 48, 87, 248, 219, 70, 44, 12, 148, 184, 80, 112, 218, 187, 250, 208, 209, 86, 161, 253, 102, 204, 214, 44, 28, 183, 159, 26, 180, 73, 246, 147, 170, 44, 51, 221, 113, 137, 36, 62, 183, 105, 127, 43, 183, 110, 247, 131, 44, 114, 181, 249, 144 },
-                            PasswordSalt = new byte[] { 78, 89, 235, 142, 68, 170, 92, 188, 160, 167, 133, 230, 193, 97, 200, 15, 95, 44, 124, 83, 53, 197, 41, 63, 251, 141, 171, 163, 67, 249, 174, 202, 43, 6, 162, 197, 6, 36, 135, 207, 124, 153, 115, 69, 112, 66, 204, 250, 201, 78, 60, 127, 98, 193, 8, 255, 157, 155, 6, 143, 89, 207, 14, 2, 161, 160, 240, 132, 211, 26, 48, 81, 231, 67, 39, 72, 87, 172, 229, 108, 58, 12, 195, 252, 45, 79, 82, 180, 144, 103, 217, 169, 171, 39, 235, 70, 224, 7, 109, 59, 68, 16, 89, 190, 193, 33, 91, 237, 126, 227, 180, 168, 171, 255, 71, 185, 193, 109, 79, 198, 244, 60, 180, 158, 18, 215, 182, 198 },
-                            Ref = new Guid("fb7b84c2-fbb6-48bd-b535-60c789f1ff86"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            PasswordHash = new byte[] { 102, 139, 229, 44, 118, 86, 172, 230, 254, 106, 232, 97, 219, 76, 93, 43, 239, 41, 212, 120, 188, 213, 195, 83, 250, 237, 142, 51, 1, 162, 162, 230, 42, 223, 141, 97, 124, 177, 53, 111, 27, 138, 209, 34, 214, 224, 153, 9, 47, 110, 84, 108, 66, 6, 91, 174, 237, 152, 81, 237, 187, 55, 61, 199 },
+                            PasswordSalt = new byte[] { 179, 121, 193, 212, 64, 99, 0, 49, 69, 175, 23, 216, 164, 75, 155, 75, 96, 179, 104, 232, 91, 40, 213, 43, 92, 218, 50, 153, 40, 109, 223, 153, 102, 138, 210, 194, 184, 22, 147, 192, 34, 252, 56, 201, 236, 16, 146, 27, 57, 117, 233, 90, 19, 229, 27, 180, 102, 18, 91, 42, 239, 238, 156, 107, 153, 46, 23, 104, 252, 236, 24, 212, 83, 108, 205, 182, 94, 129, 34, 155, 56, 148, 222, 210, 139, 190, 216, 52, 192, 167, 38, 191, 95, 102, 176, 115, 99, 85, 221, 108, 174, 76, 202, 71, 170, 217, 94, 36, 168, 89, 248, 39, 172, 104, 137, 220, 183, 40, 75, 89, 36, 40, 162, 141, 219, 108, 204, 48 },
+                            Ref = new Guid("e6e44ff9-19aa-47be-9e4f-271e174b62e3")
                         });
                 });
 

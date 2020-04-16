@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Motel.API.Classes;
 
@@ -38,10 +40,55 @@ namespace Motel.API.Models
 
 
             modelBuilder.Entity<Reservation>().HasData(
-                new Reservation { Id = 1, NumberOfAdults = 2, NumberOfChildren = 1, ArrivalDate = new DateTime(2020, 08, 08), DepartureDate = new DateTime(2020, 08, 15), UserId = 1 },
-                new Reservation { Id = 2, NumberOfAdults = 1, NumberOfChildren = 3, ArrivalDate = new DateTime(2020, 12, 03), DepartureDate = new DateTime(2020, 12, 25), UserId = 1 },
-                new Reservation { Id = 3, NumberOfAdults = 1, NumberOfChildren = 2, ArrivalDate = new DateTime(2020, 06, 02), DepartureDate = new DateTime(2020, 06, 13), UserId = 1 }
+                new Reservation { Id = 1, NumberOfAdults = 2, NumberOfChildren = 1, ArrivalDate = new DateTime(2020, 08, 08), DepartureDate = new DateTime(2020, 08, 15), UserId = 1, Ref = Guid.NewGuid() },
+                new Reservation { Id = 2, NumberOfAdults = 1, NumberOfChildren = 3, ArrivalDate = new DateTime(2020, 12, 03), DepartureDate = new DateTime(2020, 12, 25), UserId = 1, Ref = Guid.NewGuid() },
+                new Reservation { Id = 3, NumberOfAdults = 1, NumberOfChildren = 2, ArrivalDate = new DateTime(2020, 06, 02), DepartureDate = new DateTime(2020, 06, 13), UserId = 1, Ref = Guid.NewGuid() }
             );
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            OnBeforeSave();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            OnBeforeSave();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void OnBeforeSave()
+        {
+            ChangeTracker.DetectChanges();
+
+            var entries = ChangeTracker.Entries().Where(e => e.Entity is ISoftDeletes && (
+             e.State == EntityState.Added
+             || e.State == EntityState.Modified || e.State == EntityState.Deleted));
+
+            foreach (var entityEntry in entries)
+            {
+                ((ISoftDeletes)entityEntry.Entity).UpdatedAt = DateTime.Now;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((ISoftDeletes)entityEntry.Entity).CreatedAt = DateTime.Now;
+                }
+
+                if (entityEntry.State == EntityState.Deleted)
+                {
+                    ((ISoftDeletes)entityEntry.Entity).DeletedAt = DateTime.Now;
+                    entityEntry.State = EntityState.Unchanged;
+                }
+            }
+
+            entries = ChangeTracker.Entries().Where(e => e.Entity is IReferenceable && (
+                         e.State == EntityState.Added));
+
+            foreach (var entityEntry in entries)
+            {
+                ((IReferenceable)entityEntry.Entity).Ref = Guid.NewGuid();
+            }
         }
 
 
